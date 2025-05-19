@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}View Receipt{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10 offset-md-1">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">Receipt/Screenshot</h5>
+                <a href="{{ url_for('index') }}" class="btn btn-sm btn-secondary">Back to Dashboard</a>
+            </div>
+            <div class="card-body text-center">
+                {% set file_ext = filename.split('.')[-1].lower() %}
+                {% if file_ext in ['jpg', 'jpeg', 'png', 'gif'] %}
+                    <img src="{{ url_for('static', filename='uploads/' + filename) }}" class="img-fluid" alt="Receipt Image">
+                {% elif file_ext == 'pdf' %}
+                    <div class="ratio ratio-16x9">
+                        <iframe src="{{ url_for('static', filename='uploads/' + filename) }}" allowfullscreen></iframe>
+                    </div>
+                    <div class="mt-3">
+                        <a href="{{ url_for('static', filename='uploads/' + filename) }}" class="btn btn-primary" target="_blank">
+                            <i class="fas fa-external-link-alt me-2"></i>Open PDF in New Tab
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        Unsupported file format. <a href="{{ url_for('static', filename='uploads/' + filename) }}" target="_blank">Click here</a> to download the file.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
