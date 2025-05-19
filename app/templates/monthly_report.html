@@ -16,7 +16,11 @@
                         <select class="form-select" id="month_year" name="month_year" onchange="updateMonthYear()">
                             {% for month, year in month_year_choices %}
                             <option value="{{ month }},{{ year }}" {% if month == selected_month and year == selected_year %}selected{% endif %}>
-                                {{ datetime(year, month, 1).strftime('%B %Y') }}
+                                {% if datetime %}
+                                    {{ datetime(year, month, 1).strftime('%B %Y') }}
+                                {% else %}
+                                    {{ month }}/{{ year }}
+                                {% endif %}
                             </option>
                             {% endfor %}
                         </select>
