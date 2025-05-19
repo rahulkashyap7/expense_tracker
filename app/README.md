@@ -47,7 +47,7 @@ The application comes pre-configured with:
 
 4. Open your browser and navigate to:
    ```
-   http://localhost:8080
+   http://localhost:12000
    ```
 
 ### Option 2: Manual Setup
@@ -86,7 +86,7 @@ The application comes pre-configured with:
 
 7. Open your browser and navigate to:
    ```
-   http://localhost:8080
+   http://localhost:12000
    ```
 
 ## Usage
