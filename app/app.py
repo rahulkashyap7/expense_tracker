@@ -385,4 +385,4 @@ if __name__ == '__main__':
     init_db()
     
     # Run app
-    app.run(host='0.0.0.0', port=12000, debug=True)
+    app.run(host='0.0.0.0', port=12001, debug=True)
