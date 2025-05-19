@@ -27,15 +27,17 @@ The application comes pre-configured with:
 
 ## Installation
 
+### Option 1: Quick Setup (Recommended)
+
 1. Clone the repository:
    ```
    git clone https://github.com/yourusername/expense-tracker.git
    cd expense-tracker
    ```
 
-2. Install dependencies:
+2. Run the setup script:
    ```
-   pip install -r requirements.txt
+   ./setup.sh
    ```
 
 3. Run the application:
@@ -44,6 +46,45 @@ The application comes pre-configured with:
    ```
 
 4. Open your browser and navigate to:
+   ```
+   http://localhost:8080
+   ```
+
+### Option 2: Manual Setup
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/expense-tracker.git
+   cd expense-tracker
+   ```
+
+2. Create and activate a virtual environment (optional but recommended):
+   ```
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. Install dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+4. Create uploads directory:
+   ```
+   mkdir -p static/uploads
+   ```
+
+5. Initialize the database:
+   ```
+   python -c "from app import init_db; init_db()"
+   ```
+
+6. Run the application:
+   ```
+   python app.py
+   ```
+
+7. Open your browser and navigate to:
    ```
    http://localhost:8080
    ```
@@ -61,6 +102,48 @@ The application comes pre-configured with:
 - **Backend**: Flask, SQLAlchemy, SQLite
 - **Frontend**: HTML, CSS, JavaScript, Bootstrap 5
 - **Data Visualization**: Chart.js
+
+## Deployment
+
+### GitHub Repository Setup
+
+1. Create a new repository on GitHub:
+   - Go to https://github.com/new
+   - Enter a repository name (e.g., "expense-tracker")
+   - Choose public or private visibility
+   - Click "Create repository"
+
+2. Connect your local repository to GitHub:
+   ```
+   git remote add origin https://github.com/yourusername/expense-tracker.git
+   git push -u origin main
+   ```
+
+### Heroku Deployment
+
+1. Create a Heroku account if you don't have one: https://signup.heroku.com/
+
+2. Install the Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
+
+3. Login to Heroku:
+   ```
+   heroku login
+   ```
+
+4. Create a new Heroku app:
+   ```
+   heroku create your-expense-tracker
+   ```
+
+5. Push to Heroku:
+   ```
+   git push heroku main
+   ```
+
+6. Open your app:
+   ```
+   heroku open
+   ```
 
 ## License
 
