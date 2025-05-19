@@ -184,14 +184,24 @@ def add_income():
     
     return render_template('add_income.html', today=datetime.today().strftime('%Y-%m-%d'))
 
-@app.route('/monthly_report', methods=['GET', 'POST'])
+@app.route('/monthly_report', methods=['GET'])
 def monthly_report():
     month_year_choices = get_month_year_choices()
     
     # Default to current month/year
     today = datetime.today()
-    selected_month = request.args.get('month', today.month, type=int)
-    selected_year = request.args.get('year', today.year, type=int)
+    
+    # Check if month_year parameter is provided
+    month_year = request.args.get('month_year')
+    if month_year:
+        month, year = map(int, month_year.split(','))
+    else:
+        # Use individual month and year parameters if provided
+        month = request.args.get('month', today.month, type=int)
+        year = request.args.get('year', today.year, type=int)
+    
+    selected_month = month
+    selected_year = year
     
     # Get expenses for selected month/year
     expenses = Expense.query.filter(
@@ -229,7 +239,42 @@ def monthly_report():
         month_year_choices=month_year_choices,
         selected_month=selected_month,
         selected_year=selected_year,
-        month_name=datetime(2000, selected_month, 1).strftime('%B')
+        month_name=datetime(2000, selected_month, 1).strftime('%B'),
+        datetime=datetime  # Pass datetime module to template
+    )
+
+@app.route('/all_expenses')
+def all_expenses():
+    # Get all expenses
+    expenses = Expense.query.order_by(Expense.date.desc()).all()
+    
+    # Get total expenses
+    total_expenses = sum(expense.amount for expense in expenses)
+    
+    # Get expenses by category for chart
+    expenses_by_category = db.session.query(
+        Category.name, db.func.sum(Expense.amount)
+    ).join(Expense).group_by(Category.name).all()
+    
+    return render_template(
+        'all_expenses.html',
+        expenses=expenses,
+        total_expenses=total_expenses,
+        expenses_by_category=expenses_by_category
+    )
+
+@app.route('/all_income')
+def all_income():
+    # Get all income
+    incomes = Income.query.order_by(Income.date.desc()).all()
+    
+    # Get total income
+    total_income = sum(income.amount for income in incomes)
+    
+    return render_template(
+        'all_income.html',
+        incomes=incomes,
+        total_income=total_income
     )
 
 @app.route('/manage_categories', methods=['GET', 'POST'])

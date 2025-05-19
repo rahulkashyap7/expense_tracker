@@ -13,7 +13,7 @@
                 <form method="GET" action="{{ url_for('monthly_report') }}" class="row g-3 align-items-end">
                     <div class="col-md-4">
                         <label for="month_year" class="form-label">Select Month & Year</label>
-                        <select class="form-select" id="month_year" onchange="this.form.submit()">
+                        <select class="form-select" id="month_year" name="month_year" onchange="updateMonthYear()">
                             {% for month, year in month_year_choices %}
                             <option value="{{ month }},{{ year }}" {% if month == selected_month and year == selected_year %}selected{% endif %}>
                                 {{ datetime(year, month, 1).strftime('%B %Y') }}
@@ -21,8 +21,11 @@
                             {% endfor %}
                         </select>
                     </div>
-                    <input type="hidden" name="month" id="selected_month">
-                    <input type="hidden" name="year" id="selected_year">
+                    <input type="hidden" name="month" id="selected_month" value="{{ selected_month }}">
+                    <input type="hidden" name="year" id="selected_year" value="{{ selected_year }}">
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">View Report</button>
+                    </div>
                 </form>
             </div>
         </div>
@@ -176,11 +179,15 @@
 {% block scripts %}
 <script>
     // Handle month/year selection
-    document.getElementById('month_year').addEventListener('change', function() {
-        const [month, year] = this.value.split(',');
+    function updateMonthYear() {
+        const selectElement = document.getElementById('month_year');
+        const [month, year] = selectElement.value.split(',');
         document.getElementById('selected_month').value = month;
         document.getElementById('selected_year').value = year;
-    });
+    }
+    
+    // Initialize on page load
+    updateMonthYear();
     
     // Expenses by Category Chart
     {% if expenses_by_category %}
