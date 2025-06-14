@@ -119,32 +119,6 @@ The application comes pre-configured with:
    git push -u origin main
    ```
 
-### Heroku Deployment
-
-1. Create a Heroku account if you don't have one: https://signup.heroku.com/
-
-2. Install the Heroku CLI: https://devcenter.heroku.com/articles/heroku-cli
-
-3. Login to Heroku:
-   ```
-   heroku login
-   ```
-
-4. Create a new Heroku app:
-   ```
-   heroku create your-expense-tracker
-   ```
-
-5. Push to Heroku:
-   ```
-   git push heroku main
-   ```
-
-6. Open your app:
-   ```
-   heroku open
-   ```
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
